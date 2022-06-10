@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" th:href="index.css">
+</head>
+<body>
+<div th:fragment="header">
+    <div class="navi">
+        <h1>Tra cứu thông tin tuyển sinh</h1>
+    </div>
+    <div class="logo">
+        <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-GHTK-Slogan-Green.png" alt="logo">
+    </div>
+</div>
+
+<div class="main">
+    <form th:action="@{/add}" method="post" enctype="multipart/form-data">
+        <input type="file" name="excelFile"/>
+        <button type="submit"> Upload</button>
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+.navi{
+    width:100%;
+    height:100px;
+
+}
+h1{
+    text-align:center;
+    padding-top:20px;
+}
+.logo{
+    width: 100%;
+    height: 240px;
+    text-align:center;
+}
+
+.logo img{
+    width: 300px;
+    height: 100%;
+    object-fit: cover;
+
+}
+.main{
+    width:100%;
+    height:100px;
+    text-align:center;
+    padding-top:50px;
+}
+#fileupload{
+    font-size: 20px;
+}
+#upload-button{
+    font-size: 20px;
+}
+form{
+    width:100%;
+    text-align:center;
+    padding-top:50px;
+    margin: 2%;
+}
+td{
+    text-align:center;
+    padding:10px;
+    border:1px solid black;
+}
+tr{
+
+
+}
+.top{
+    border-bottom:1px solid black;
+}
+.bottom p{
+    border:1px solid black;
+    margin:0px;
+    padding:10px;
+}
+.bottom{
+    display:flex;
+}
+.ngaySinh{
+    padding:0px;
+}
+.dateTime{
+    margin:0px;
+    padding:10px;
+}

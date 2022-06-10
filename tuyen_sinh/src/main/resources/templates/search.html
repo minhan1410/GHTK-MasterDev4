@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="index.html ::  head('Search')"></head>
+<body>
+<div th:replace="index.html :: header"></div>
+<div>
+    <form th:action="@{/search}" method="post">
+        <label for="name">Họ và tên</label><input type="text" id="name" name="name">
+        <label for="id">Mã học sinh</label><input type="text" id="id" name="id">
+        <input type="submit">
+    </form>
+</div>
+<div>
+    <table>
+        <thead>
+        <td>STT</td>
+        <td>Trường tiểu học</td>
+        <td>Quận/huyện</td>
+        <td>Mã học sinh</td>
+        <td>Lớp</td>
+        <td>Tên</td>
+        <td>Ngày sinh</td>
+        <td>Giới tính</td>
+        <td>Nơi sinh</td>
+        <td>Dân tộc</td>
+        <td>Hộ khẩu</td>
+        <td>SDT</td>
+        </thead>
+        <tbody th:each="student, istart : ${students}">
+        <td th:text="${istart.index + 1}"></td>
+        <td th:text="${student.school}"></td>
+        <td th:text="${student.address}"></td>
+        <td th:text="${student.idstudent}"></td>
+        <td th:text="${student.className}"></td>
+        <td th:text="${student.name}"></td>
+        <td th:text="${#dates.format(student.birthday, 'dd-MMM-yyyy')}"></td>
+        <td th:text="${student.sex}"></td>
+        <td th:text="${student.noiSinh}"></td>
+        <td th:text="${student.danToc}"></td>
+        <td th:text="${student.hoKhau}"></td>
+        <td th:text="${student.phone}"></td>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
