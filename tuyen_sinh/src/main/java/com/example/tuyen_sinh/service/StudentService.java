@@ -2,6 +2,7 @@ package com.example.tuyen_sinh.service;
 
 import com.example.tuyen_sinh.model.Student;
 import com.example.tuyen_sinh.repository.StudentRepository;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,84 +30,37 @@ public class StudentService {
             DataFormatter fmt = new DataFormatter();
             FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
 
-            List<List<Object>> values = new ArrayList<>();
-
-            for (int i = 5; i < sheet.getPhysicalNumberOfRows(); i++) {
-                List<Object> valueRow = new ArrayList<Object>();
-                sheet.getRow(i).forEach(
-                        cell -> {
-                            switch (cell.getCellType()) {
-                                case Cell.CELL_TYPE_BOOLEAN:
-                                    valueRow.add(cell.getBooleanCellValue());
-                                    break;
-                                case Cell.CELL_TYPE_NUMERIC:
-                                    valueRow.add(cell.getNumericCellValue());
-                                    break;
-                                case Cell.CELL_TYPE_STRING:
-                                    valueRow.add(cell.getStringCellValue());
-                                    break;
-                                case Cell.CELL_TYPE_BLANK:
-                                    valueRow.add(" ");
-                                    break;
-                                case Cell.CELL_TYPE_ERROR:
-                                    break;
-
-                                // CELL_TYPE_FORMULA will never occur
-                                case Cell.CELL_TYPE_FORMULA:
-                                    valueRow.add(fmt.formatCellValue(cell, evaluator));
-                                    break;
-                            }
-                        });
-                values.add(valueRow);
-            }
-
-//            add db
-            for (List<Object> row : values) {
+            for (int index = 5; index < sheet.getPhysicalNumberOfRows(); index++) {
+                Row currentRow = sheet.getRow(index);
                 Student student = new Student();
-                for (int i = 1; i < row.size(); i++) {
-                    switch (i) {
-                        case 1:
-                            student.setSchool((String) row.get(i));
-                            break;
-                        case 2:
-                            student.setAddress((String) row.get(i));
-                            break;
-                        case 3:
-                            student.setIdstudent(formatString((String) row.get(i)));
-                            break;
-                        case 4:
-                            student.setClassName((String) row.get(i));
-                            break;
-                        case 5:
-                            student.setName(formatString((String) row.get(i)));
-                            break;
-                        case 6:
-                            SimpleDateFormat DateFor = new SimpleDateFormat("yyyy/MM/dd");
-                            Date birthday = DateFor.parse((String) row.get(i + 2) + "/" + (String) row.get(i + 1) + "/" + (String) row.get(i));
-                            student.setBirthday(birthday);
-                            break;
-                        case 9:
-                            student.setSex((String) row.get(i));
-                            break;
-                        case 10:
-                            student.setNoiSinh((String) row.get(i));
-                            break;
-                        case 11:
-                            student.setDanToc((String) row.get(i));
-                            break;
-                        case 12:
-                            student.setHoKhau((String) row.get(i));
-                            break;
-                        case 13:
-                            student.setPhone((String) row.get(i));
-                            break;
-                    }
-                }
-//                System.out.println("\n" + student + "\n");
-                Optional<Student> optional = studentRepository.findByIdstudent(student.getIdstudent());
-                if (!optional.isPresent()) {
-                    studentRepository.save(student);
-                }
+
+                student.setSchool(fmt.formatCellValue(currentRow.getCell(1)));
+                student.setAddress(fmt.formatCellValue(currentRow.getCell(2)));
+                student.setIdstudent(fmt.formatCellValue(currentRow.getCell(3)));
+                student.setClassName(fmt.formatCellValue(currentRow.getCell(4)));
+                student.setName(fmt.formatCellValue(currentRow.getCell(5)));
+
+                SimpleDateFormat DateFor = new SimpleDateFormat("yyyy/MM/dd");
+                Date birthday = DateFor.parse(currentRow.getCell(8) + "/" + currentRow.getCell(7) + "/" + currentRow.getCell(6));
+                student.setBirthday(birthday);
+
+                student.setSex(fmt.formatCellValue(currentRow.getCell(9)));
+                student.setNoiSinh(fmt.formatCellValue(currentRow.getCell(10)));
+                student.setDanToc(fmt.formatCellValue(currentRow.getCell(11)));
+                student.setHoKhau(fmt.formatCellValue(currentRow.getCell(12)));
+                student.setPhone(fmt.formatCellValue(currentRow.getCell(13)));
+                student.setPoint1(isNumeric(fmt.formatCellValue(currentRow.getCell(14), evaluator)));
+                student.setPoint2(isNumeric(fmt.formatCellValue(currentRow.getCell(15), evaluator)));
+                student.setPoint3(isNumeric(fmt.formatCellValue(currentRow.getCell(16), evaluator)));
+                student.setPoint4(isNumeric(fmt.formatCellValue(currentRow.getCell(17), evaluator)));
+                student.setPoint5(isNumeric(fmt.formatCellValue(currentRow.getCell(18), evaluator)));
+                student.setTotal5year(isNumeric(fmt.formatCellValue(currentRow.getCell(19), evaluator)));
+                student.setPriorityPoints(isNumeric(fmt.formatCellValue(currentRow.getCell(20), evaluator)));
+                student.setTotalPoint(isNumeric(fmt.formatCellValue(currentRow.getCell(21), evaluator)));
+                student.setNote(fmt.formatCellValue(currentRow.getCell(22)));
+
+//                System.out.println("\n" + student+"\n");
+                studentRepository.save(student);
             }
 
         } catch (FileNotFoundException e) {
@@ -137,5 +91,13 @@ public class StudentService {
 
     private String formatString(String str) {
         return str.toLowerCase().replaceAll("\\s+", " ").trim();
+    }
+
+    private Double isNumeric(String str){
+        if (NumberUtils.isParsable(str)) {
+            return Double.parseDouble(str);
+        } else {
+            return 0.0;
+        }
     }
 }

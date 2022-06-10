@@ -50,4 +50,14 @@ public class Student {
     @Column(name = "phone")
     private String phone;
 
+    private Double point1;
+    private Double point2;
+    private Double point3;
+    private Double point4;
+    private Double point5;
+    private Double total5year = 0.0;
+    private Double priorityPoints = 0.0;
+    private Double totalPoint = 0.0;
+    private String note;
+
 }

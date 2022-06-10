@@ -6,8 +6,8 @@
 <div th:replace="index.html :: header"></div>
 <div>
     <form th:action="@{/search}" method="post">
-        <label for="name">Họ và tên</label><input type="text" id="name" name="name">
-        <label for="id">Mã học sinh</label><input type="text" id="id" name="id">
+        <label for="name">Họ và tên</label><input type="text" id="name" name="name"></br>
+        <label for="id">Mã học sinh</label><input type="text" id="id" name="id"></br>
         <input type="submit">
     </form>
 </div>
@@ -26,6 +26,15 @@
         <td>Dân tộc</td>
         <td>Hộ khẩu</td>
         <td>SDT</td>
+        <td>Tổng điểm năm lớp 1</td>
+        <td>Tổng điểm năm lớp 2</td>
+        <td>Tổng điểm năm lớp 3</td>
+        <td>Tổng điểm năm lớp 4</td>
+        <td>Tổng điểm năm lớp 5</td>
+        <td>Tổng điểm kết quả 5 năm</td>
+        <td>Điểm ưu tiên</td>
+        <td>Tổng điểm sơ tuyển</td>
+        <td>Ghi chú</td>
         </thead>
         <tbody th:each="student, istart : ${students}">
         <td th:text="${istart.index + 1}"></td>
@@ -40,6 +49,15 @@
         <td th:text="${student.danToc}"></td>
         <td th:text="${student.hoKhau}"></td>
         <td th:text="${student.phone}"></td>
+        <td th:text="${student.point1}"></td>
+        <td th:text="${student.point2}"></td>
+        <td th:text="${student.point3}"></td>
+        <td th:text="${student.point4}"></td>
+        <td th:text="${student.point5}"></td>
+        <td th:text="${student.total5year}"></td>
+        <td th:text="${student.priorityPoints}"></td>
+        <td th:text="${student.totalPoint}"></td>
+        <td th:text="${student.note}"></td>
         </tbody>
     </table>
 </div>
