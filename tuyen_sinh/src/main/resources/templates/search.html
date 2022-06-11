@@ -6,9 +6,25 @@
 <div th:replace="index.html :: header"></div>
 <div>
     <form th:action="@{/search}" method="post">
-        <label for="name">Họ và tên</label><input type="text" id="name" name="name"></br>
-        <label for="id">Mã học sinh</label><input type="text" id="id" name="id"></br>
-        <input type="submit">
+        <div class="row">
+            <div class="col-left">
+                <label for="name">Họ và tên:</label>
+            </div>
+            <div class="col-right">
+                <input type="text" id="name" name="name"></br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-left">
+                <label for="id">Mã học sinh:</label>
+            </div>
+            <div class="col-right">
+                <input type="text" id="id" name="id"></br>
+            </div>
+        </div>
+
+
+        <input type="submit" id="submitBtn">
     </form>
 </div>
 <div>

@@ -1,3 +1,6 @@
+body{
+    overflow-x:hidden;
+}
 .navi{
     width:100%;
     height:100px;
@@ -35,7 +38,7 @@ form{
     width:100%;
     text-align:center;
     padding-top:50px;
-    margin: 2%;
+    /*margin: 2%;*/
 }
 td{
     text-align:center;
@@ -63,4 +66,26 @@ tr{
 .dateTime{
     margin:0px;
     padding:10px;
+}
+.col-left{
+    width:25%
+}
+.col-right{
+    width:75%;
+}
+.row{
+    margin-left:36%;
+width:25%;
+    display:flex;
+    margin-top: 1%;
+}
+#submitBtn{
+    margin: 1%;
+    width: 6%;
+    height: 30px;
+}
+table{
+    width:100%;
+    text-align:center;
+
 }
