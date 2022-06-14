@@ -27,53 +27,57 @@
         <input type="submit" id="submitBtn">
     </form>
 </div>
-<div>
+<div class=" fix-width ">
     <table>
         <thead>
-        <td>STT</td>
-        <td>Trường tiểu học</td>
-        <td>Quận/huyện</td>
-        <td>Mã học sinh</td>
-        <td>Lớp</td>
-        <td>Tên</td>
-        <td>Ngày sinh</td>
-        <td>Giới tính</td>
-        <td>Nơi sinh</td>
-        <td>Dân tộc</td>
-        <td>Hộ khẩu</td>
-        <td>SDT</td>
-        <td>Tổng điểm năm lớp 1</td>
-        <td>Tổng điểm năm lớp 2</td>
-        <td>Tổng điểm năm lớp 3</td>
-        <td>Tổng điểm năm lớp 4</td>
-        <td>Tổng điểm năm lớp 5</td>
-        <td>Tổng điểm kết quả 5 năm</td>
-        <td>Điểm ưu tiên</td>
-        <td>Tổng điểm sơ tuyển</td>
-        <td>Ghi chú</td>
+        <tr>
+            <th>STT</th>
+            <th>Trường tiểu học</th>
+            <th>Quận/huyện</th>
+            <th>Mã học sinh</th>
+            <th>Lớp</th>
+            <th style="width: 210px;">Tên</th>
+            <th style="width: 130px;">Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Nơi sinh</th>
+            <th>Dân tộc</th>
+            <th style="width: 200px;">Hộ khẩu</th>
+            <th>SDT</th>
+            <th>Tổng điểm năm lớp 1</th>
+            <th>Tổng điểm năm lớp 2</th>
+            <th>Tổng điểm năm lớp 3</th>
+            <th>Tổng điểm năm lớp 4</th>
+            <th>Tổng điểm năm lớp 5</th>
+            <th>Tổng điểm kết quả 5 năm</th>
+            <th>Điểm ưu tiên</th>
+            <th>Tổng điểm sơ tuyển</th>
+            <th style="width: 250px;">Ghi chú</th>
+        </tr>
         </thead>
-        <tbody th:each="student, istart : ${students}">
-        <td th:text="${istart.index + 1}"></td>
-        <td th:text="${student.school}"></td>
-        <td th:text="${student.address}"></td>
-        <td th:text="${student.idstudent}"></td>
-        <td th:text="${student.className}"></td>
-        <td th:text="${student.name}"></td>
-        <td th:text="${#dates.format(student.birthday, 'dd-MMM-yyyy')}"></td>
-        <td th:text="${student.sex}"></td>
-        <td th:text="${student.noiSinh}"></td>
-        <td th:text="${student.danToc}"></td>
-        <td th:text="${student.hoKhau}"></td>
-        <td th:text="${student.phone}"></td>
-        <td th:text="${student.point1}"></td>
-        <td th:text="${student.point2}"></td>
-        <td th:text="${student.point3}"></td>
-        <td th:text="${student.point4}"></td>
-        <td th:text="${student.point5}"></td>
-        <td th:text="${student.total5year}"></td>
-        <td th:text="${student.priorityPoints}"></td>
-        <td th:text="${student.totalPoint}"></td>
-        <td th:text="${student.note}"></td>
+        <tbody>
+        <tr th:each="student, istart : ${students}">
+            <td th:text="${istart.index + 1}"></td>
+            <td th:text="${student.school}"></td>
+            <td th:text="${student.address}"></td>
+            <td th:text="${student.idstudent}"></td>
+            <td th:text="${student.className}"></td>
+            <td th:text="${student.name}"></td>
+            <td th:text="${#dates.format(student.birthday, 'dd-MMM-yyyy')}"></td>
+            <td th:text="${student.sex}"></td>
+            <td th:text="${student.noiSinh}"></td>
+            <td th:text="${student.danToc}"></td>
+            <td th:text="${student.hoKhau}"></td>
+            <td th:text="${student.phone}"></td>
+            <td th:text="${student.point1}"></td>
+            <td th:text="${student.point2}"></td>
+            <td th:text="${student.point3}"></td>
+            <td th:text="${student.point4}"></td>
+            <td th:text="${student.point5}"></td>
+            <td th:text="${student.total5year}"></td>
+            <td th:text="${student.priorityPoints}"></td>
+            <td th:text="${student.totalPoint}"></td>
+            <td th:text="${student.note}"></td>
+        </tr>
         </tbody>
     </table>
 </div>

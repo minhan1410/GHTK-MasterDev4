@@ -78,7 +78,7 @@ public class StudentService {
 
     public List<Student> searchStudent(String id, String name) {
         name = formatString(name);
-        id = formatString(id);
+        id = formatString(id).replace(" ","%");
 
         if (id.equals("")) {
             return studentRepository.findByName(name);
