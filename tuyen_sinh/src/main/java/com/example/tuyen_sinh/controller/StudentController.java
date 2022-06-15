@@ -23,9 +23,13 @@ public class StudentController {
     }
 
     @PostMapping("/add")
-    public String addDataFromExcel(@RequestParam("excelFile") MultipartFile excelFile) {
-        studentService.addDataFromExcel(excelFile);
-        return "redirect:search";
+    public String addDataFromExcel(@RequestParam("excelFile") MultipartFile excelFile, Model model) {
+        if (excelFile.getOriginalFilename().contains(".xlsx")) {
+            studentService.addDataFromExcel(excelFile);
+            return "redirect:search";
+        }
+        model.addAttribute("error", "File không đúng định dạng");
+        return "index";
     }
 
     @GetMapping("/search")

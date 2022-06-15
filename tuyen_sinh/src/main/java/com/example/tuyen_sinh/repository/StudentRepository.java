@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, String> {
-    Optional<Student> findByIdstudent(String s);
+//    Optional<Student> findByIdstudent(String s);
 
     @Query("select student from Student student where student.name like %:name%")
     List<Student> findByName(@Param("name") String name);
