@@ -10,11 +10,11 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
-//    List<ProductEntity> findByNameLike(String name);
-//
-//    List<ProductEntity> findByPriceGreaterThan(Double price);
-//
-//    List<ProductEntity> findByNameLikeAndPriceGreaterThanDesc(String name, Double price);
+    List<ProductEntity> findByNameContaining(String name);
+
+    List<ProductEntity> findByPriceGreaterThan(Double price);
+
+    List<ProductEntity> findByNameContainingAndPriceGreaterThanOrderByPriceDesc(String name, Double price);
 
     @Query("select p from ProductEntity p where p.price > :price and p.name like '%:name' ORDER BY p.price desc")
     List<ProductEntity> findProductEntity(@Param("price") Double price, @Param("name") String name);
