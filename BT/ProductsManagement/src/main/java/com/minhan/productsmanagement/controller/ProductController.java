@@ -3,7 +3,9 @@ package com.minhan.productsmanagement.controller;
 import com.minhan.productsmanagement.model.entity.ProductEntity;
 import com.minhan.productsmanagement.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,12 +39,14 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity search(@RequestParam("price") Double price, @RequestParam(value = "name") String name) {
+    public ResponseEntity search(@RequestParam("page") int page, @RequestParam("page_size") int pageSize, @RequestParam("price") Double price, @RequestParam(value = "name") String name) {
         List<ProductEntity> names = productRepository.findByNameContaining(name);
         List<ProductEntity> prices = productRepository.findByPriceGreaterThan(price);
-        List<ProductEntity> c1 = productRepository.findByNameContainingAndPriceGreaterThanOrderByPriceDesc(name, price);
+
+        Page<ProductEntity> c1 = productRepository.findByNameContainingAndPriceGreaterThanOrderByPriceDesc(PageRequest.of(page, pageSize), name, price);
         List<ProductEntity> c2 = productRepository.findProductEntity(price, name);
         List<ProductEntity> c3 = productRepository.search(price, name);
-        return ResponseEntity.ok(c3);
+
+        return ResponseEntity.ok(c1);
     }
 }
