@@ -40,9 +40,9 @@ public class ProductController {
     public ResponseEntity search(@RequestParam("price") Double price, @RequestParam(value = "name") String name) {
         List<ProductEntity> names = productRepository.findByNameContaining(name);
         List<ProductEntity> prices = productRepository.findByPriceGreaterThan(price);
-        List<ProductEntity> namesAndPrices = productRepository.findByNameContainingAndPriceGreaterThanOrderByPriceDesc(name, price);
-        List<ProductEntity> products = productRepository.findProductEntity(price, name);
-        List<ProductEntity> result = productRepository.search(price, name);
-        return ResponseEntity.ok(result);
+        List<ProductEntity> c1 = productRepository.findByNameContainingAndPriceGreaterThanOrderByPriceDesc(name, price);
+        List<ProductEntity> c2 = productRepository.findProductEntity(price, name);
+        List<ProductEntity> c3 = productRepository.search(price, name);
+        return ResponseEntity.ok(c3);
     }
 }

@@ -16,7 +16,7 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     List<ProductEntity> findByNameContainingAndPriceGreaterThanOrderByPriceDesc(String name, Double price);
 
-    @Query("select p from ProductEntity p where p.price > :price and p.name like '%:name' ORDER BY p.price desc")
+    @Query("select p from ProductEntity p where p.price > :price and p.name like %:name% ORDER BY p.price desc")
     List<ProductEntity> findProductEntity(@Param("price") Double price, @Param("name") String name);
 
     @Query(value = "select * from product as p where p.price > ?1 and p.name like CONCAT('%', ?2, '%') ORDER BY p.price desc", nativeQuery = true)
