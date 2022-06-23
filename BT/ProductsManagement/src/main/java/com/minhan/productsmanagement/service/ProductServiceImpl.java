@@ -8,12 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IProductService implements ProductService {
+public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
-    private ICategoryService iCategoryService;
+    private CategoryServiceImpl categoryServiceImpl;
 
     @Override
     public Page<ProductEntity> get(Pageable pageable) {
@@ -22,12 +22,12 @@ public class IProductService implements ProductService {
 
     @Override
     public ProductEntity create(ProductEntity newProduct) {
-        return iCategoryService.categoryIsPresentById(newProduct.getCategory().getId()) ? productRepository.save(newProduct) : null;
+        return categoryServiceImpl.categoryIsPresentById(newProduct.getCategory().getId()) ? productRepository.save(newProduct) : null;
     }
 
     @Override
     public ProductEntity update(ProductEntity product) {
-        boolean checkCategory = iCategoryService.categoryIsPresentById(product.getCategory().getId());
+        boolean checkCategory = categoryServiceImpl.categoryIsPresentById(product.getCategory().getId());
         if (!checkCategory) {
             return null;
         }
