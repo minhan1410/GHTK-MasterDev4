@@ -1,8 +1,9 @@
 package com.minhan.productsmanagement.model.entity;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "product")
@@ -16,6 +17,9 @@ public class ProductEntity {
     private String sku;
     private Integer status;
     private String description;
+    private String code;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;

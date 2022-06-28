@@ -16,7 +16,9 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     List<ProductEntity> findByPriceGreaterThan(Double price);
 
-    Page<ProductEntity> findByNameContainingAndPriceGreaterThanOrderByPriceDesc(Pageable pageable, String name, Double price);
+    Page<ProductEntity> findByStatusEquals(Integer status, Pageable pageable);
+
+    Page<ProductEntity> findByNameContainingAndPriceGreaterThanOrderByPriceDesc(String name, Double price, Pageable pageable);
 
     @Query("select p from ProductEntity p where p.price > :price and p.name like %:name% ORDER BY p.price desc")
     List<ProductEntity> findProductEntity(@Param("price") Double price, @Param("name") String name);

@@ -1,15 +1,15 @@
 package com.minhan.productsmanagement.service;
 
-import com.minhan.productsmanagement.model.entity.CategoryEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.minhan.productsmanagement.model.dto.CategoryDto;
+import com.minhan.productsmanagement.model.response.ResponseObject;
+import com.minhan.productsmanagement.model.response.ResponsePage;
 
 public interface CategoryService {
-    Page<CategoryEntity> get(Pageable pageable);
+    ResponsePage get(int page, int pageSize);
 
-    CategoryEntity create(CategoryEntity newCategory);
+    ResponseObject create(CategoryDto newCategory);
 
-    CategoryEntity update(CategoryEntity category);
+    ResponseObject update(CategoryDto category);
 
-    Boolean delete(Long categoryId);
+    ResponseObject delete(Long categoryId);
 }
