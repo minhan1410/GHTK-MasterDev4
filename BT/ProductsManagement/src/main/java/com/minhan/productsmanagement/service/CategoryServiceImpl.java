@@ -47,12 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseObject update(CategoryDto category) {
-        Optional<CategoryEntity> optional = categoryRepository.findById(category.getId());
-        if (!optional.isPresent()) {
-            throw ExceptionObject.builder().message("ID Category khong ton tai").build();
-        }
-
-        CategoryEntity categoryEntityRepository = optional.get();
+        CategoryEntity categoryEntityRepository = checkIdCategoryIsPresent(category.getId());
         if (categoryEntityRepository.getStatus() == StatusConstant.INACTIVE.getValue()) {
             throw ExceptionObject.builder().message("ID Category da xoa truoc do").build();
         }
@@ -67,12 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseObject delete(Long categoryId) {
-        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(categoryId);
-        if (!categoryEntity.isPresent()) {
-            throw ExceptionObject.builder().message("ID Category khong ton tai").build();
-        }
-
-        CategoryEntity categoryEntityRepository = categoryEntity.get();
+        CategoryEntity categoryEntityRepository = checkIdCategoryIsPresent(categoryId);
         if (categoryEntityRepository.getStatus() == StatusConstant.INACTIVE.getValue()) {
             throw ExceptionObject.builder().message("ID Category da xoa truoc do").build();
         }
@@ -83,8 +73,13 @@ public class CategoryServiceImpl implements CategoryService {
         return ResponseObject.builder().success(true).message("Thanh cong").data(null).build();
     }
 
-    public Boolean categoryIsPresentById(Long id) {
-        return categoryRepository.findById(id).isPresent();
+    public CategoryEntity checkIdCategoryIsPresent(Long id) {
+        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);
+        if (!categoryEntity.isPresent()) {
+            throw ExceptionObject.builder().message("ID Category khong ton tai").build();
+        }
+
+        return categoryEntity.orElseGet(null);
     }
 
 }

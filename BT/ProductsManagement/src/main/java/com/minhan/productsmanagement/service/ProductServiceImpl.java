@@ -41,6 +41,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseObject create(ProductDto newProduct) {
         LocalDateTime time = LocalDateTime.now();
+
+        if(categoryServiceImpl.checkIdCategoryIsPresent(newProduct.getCategoryId()).getStatus() == StatusConstant.INACTIVE.getValue()) {
+            throw ExceptionObject.builder().message("ID Category da xoa truoc do").build();
+        }
+
         ProductEntity productEntity = modelMapper.map(newProduct, ProductEntity.class);
         productEntity.setStatus(StatusConstant.ACTIVE.getValue());
         productEntity.setCreatedAt(time);
@@ -53,16 +58,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseObject update(ProductDto product) {
-        if (!categoryServiceImpl.categoryIsPresentById(product.getCategoryId())) {
-            throw ExceptionObject.builder().message("ID Category khong ton tai").build();
+        if(categoryServiceImpl.checkIdCategoryIsPresent(product.getCategoryId()).getStatus() == StatusConstant.INACTIVE.getValue()) {
+            throw ExceptionObject.builder().message("ID Category da xoa truoc do").build();
         }
 
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(product.getId());
-        if (!optionalProductEntity.isPresent()) {
-            throw ExceptionObject.builder().message("ID Product khong ton tai").build();
-        }
-
-        ProductEntity productEntityRepository = optionalProductEntity.get();
+        ProductEntity productEntityRepository = checkIdProductIsPresent(product.getId());
         if (productEntityRepository.getStatus() == StatusConstant.INACTIVE.getValue()) {
             throw ExceptionObject.builder().message("ID Product da xoa truoc do").build();
         }
@@ -79,12 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseObject delete(Long productId) {
-        Optional<ProductEntity> optionalProductEntity = productRepository.findById(productId);
-        if (!optionalProductEntity.isPresent()) {
-            throw ExceptionObject.builder().message("ID Product khong ton tai").build();
-        }
-
-        ProductEntity productEntityRepository = optionalProductEntity.get();
+        ProductEntity productEntityRepository = checkIdProductIsPresent(productId);
         if (productEntityRepository.getStatus() == StatusConstant.INACTIVE.getValue()) {
             throw ExceptionObject.builder().message("ID Product da xoa truoc do").build();
         }
@@ -103,5 +98,14 @@ public class ProductServiceImpl implements ProductService {
         return ResponsePage.builder().success(true).message("Thanh cong").data(productDtos.getContent())
                 .pagination(Pagination.builder().page(page).pagesize(pageSize)
                         .total(productDtos.getTotalElements()).build()).build();
+    }
+
+    public ProductEntity checkIdProductIsPresent(Long id) {
+        Optional<ProductEntity> product = productRepository.findById(id);
+        if (!product.isPresent()) {
+            throw ExceptionObject.builder().message("ID Product khong ton tai").build();
+        }
+
+        return product.orElseGet(null);
     }
 }
