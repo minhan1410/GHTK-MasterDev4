@@ -1,17 +1,17 @@
 package com.minhan.productsmanagement.service;
 
-import com.minhan.productsmanagement.model.entity.ProductEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.minhan.productsmanagement.model.dto.ProductDto;
+import com.minhan.productsmanagement.model.response.ResponseObject;
+import com.minhan.productsmanagement.model.response.ResponsePage;
 
 public interface ProductService {
-    Page<ProductEntity> get(Pageable pageable);
+    ResponsePage get(int page, int pageSize);
 
-    ProductEntity create(ProductEntity newProduct);
+    ResponseObject create(ProductDto newProduct);
 
-    ProductEntity update(ProductEntity product);
+    ResponseObject update(ProductDto product);
 
-    Boolean delete(Long productId);
+    ResponseObject delete(Long productId);
 
-    Page<ProductEntity> search(Pageable pageable, String name, Double price);
+    ResponsePage search(String name, Double price, int page, int pageSize);
 }
